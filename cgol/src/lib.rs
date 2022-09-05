@@ -50,21 +50,16 @@ impl Tile {
         if bottomright == Some(&Tile::new(true)) {
             alive_neighbours += 1;
         }
-        println!("Alive neighbors: {:?}", alive_neighbours);
         if self.on == true {
             if alive_neighbours == 2 || alive_neighbours == 3 {
-                println!("In case 1");
                 Tile::new(true)
             } else {
-                println!("In case 2");
                 Tile::new(false)
             }
         } else {
             if alive_neighbours == 3 {
-                println!("In case 3");
                 Tile::new(true)
             } else {
-                println!("In case 4");
                 Tile::new(false)
             }
         }
@@ -96,7 +91,7 @@ impl World {
         }
     }
 
-    fn tick(&mut self) {
+    pub fn tick(&mut self) {
         let mut new_world: Vec<Tile> = Vec::new();
         for y in 0..self.width {
             for x in 0..self.width {
@@ -109,13 +104,6 @@ impl World {
                     self.get((x + 1, y+1)),
                     self.get((x, y+1)),
                     self.get((x, y-1)),
-                );
-                println!(
-                    "x: {:?} y:{:?} before:{:?}, after:{:?}",
-                    x,
-                    y,
-                    self.get((x, y)).unwrap().on,
-                    new_tile.on
                 );
                 new_world.push(new_tile.clone());
             }
